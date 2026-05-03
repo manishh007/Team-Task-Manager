@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://team-task-manager-production-6e3d.up.railway.app/api";
 
 export default function Auth() {
-    const [isLogin, setIsLogin] = useState(true);
+    const navigate = useNavigate(); // ✅ FIXED
 
+    const [isLogin, setIsLogin] = useState(true);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -35,13 +35,8 @@ export default function Auth() {
                 return;
             }
 
-            // Save user
             localStorage.setItem("user", JSON.stringify(data));
 
-
-            const navigate = useNavigate();
-
-            // Redirect
             if (data.role === "admin") {
                 navigate("/admin");
             } else {
@@ -92,6 +87,7 @@ export default function Auth() {
             )}
 
             <button
+                type="button"
                 onClick={handleSubmit}
                 className="bg-blue-500 text-white px-4 py-2 mt-3"
             >
