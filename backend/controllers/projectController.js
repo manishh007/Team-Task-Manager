@@ -45,8 +45,12 @@ exports.getProjectById = async (req, res) => {
 };
 
 exports.getAllProjects = async (req, res) => {
-    const projects = await Project.find();
-    res.json(projects);
+    try {
+        const projects = await Project.find();
+        res.json(projects);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 exports.getUserProjects = async (req, res) => {
