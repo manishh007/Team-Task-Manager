@@ -16,6 +16,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/projects", require("./routes/projectRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 // test route
 app.get("/", (req, res) => {

@@ -10,6 +10,7 @@ function App() {
         <Route path="/" element={<Auth />} />
         <Route path="/user" element={<UserDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/assign/:projectId" element={<AssignTask />} />
       </Routes>
     </BrowserRouter>
   );

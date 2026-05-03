@@ -4,19 +4,11 @@ const User = require("../models/User");
 // Create Project (Admin only)
 exports.createProject = async (req, res) => {
     try {
-        const { title, description, members, adminId } = req.body;
-
-        // check admin
-        const admin = await User.findById(adminId);
-        if (!admin || admin.role !== "admin") {
-            return res.status(403).json({ msg: "Only admin can create project" });
-        }
+        const { title, users } = req.body;
 
         const project = await Project.create({
             title,
-            description,
-            members,
-            createdBy: adminId
+            users,
         });
 
         res.json(project);

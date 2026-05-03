@@ -17,6 +17,16 @@ export const getTasks = (userId, role) => {
     return fetch(url).then(res => res.json());
 };
 
+export const getUsers = () =>
+    fetch(`${BASE_URL}/users`).then(res => res.json());
+
+export const createProject = (data) =>
+    fetch(`${BASE_URL}/projects/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    }).then(res => res.json());
+
 export const updateTaskStatus = (taskId, userId, status) =>
     fetch(`${BASE_URL}/tasks/${taskId}`, {
         method: "PUT",
