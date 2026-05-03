@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getUserProjects } from "../services/api";
+import { getTasks } from "../services/api";
 
 export default function UserDashboard() {
-    const [projects, setProjects] = useState([]);
-    const navigate = useNavigate();
+    const [tasks, setTasks] = useState([]);
 
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
-        getUserProjects(user._id).then(setProjects);
+        getTasks(user._id, user.role).then(setTasks);
     }, []);
 
     return (
         <div className="p-4">
-            <h1 className="text-xl font-bold mb-4">My Projects</h1>
+            <h1 className="text-xl font-bold">My Tasks</h1>
 
-            {projects.map(p => (
-                <div
-                    key={p._id}
-                    onClick={() => navigate(`/project/${p._id}`)}
-                    className="bg-white shadow p-3 my-2 cursor-pointer"
-                >
-                    {p.title}
+            {tasks.map(task => (
+                <div key={task._id} className="border p-3 my-2">
+                    <h2>{task.title}</h2>
+                    <p>Status: {task.status}</p>
                 </div>
             ))}
         </div>
