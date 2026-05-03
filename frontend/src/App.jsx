@@ -3,6 +3,7 @@ import Auth from "./pages/Auth";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AssignTask from "./pages/AssignTask";
+import ProjectDetails from "./pages/ProjectDetails";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/user" element={<UserDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/assign/:projectId" element={<AssignTask />} />
+        <Route path="/project/:projectId" element={<ProjectDetails />} />
       </Routes>
     </BrowserRouter>
   );

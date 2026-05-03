@@ -44,6 +44,11 @@ exports.getProjectById = async (req, res) => {
     }
 };
 
+exports.getAllProjects = async (req, res) => {
+    const projects = await Project.find();
+    res.json(projects);
+};
+
 exports.getUserProjects = async (req, res) => {
     try {
         const { userId } = req.params;

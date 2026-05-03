@@ -1,29 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getTasks, getUsers, createProject } from "../services/api";
-
+import { getUsers, createProject, getProjects } from "../services/api";
 
 export default function AdminDashboard() {
-    const [tasks, setTasks] = useState([]);
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [projectTitle, setProjectTitle] = useState("");
+    const [projects, setProjects] = useState([]);
+
     const navigate = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem("user"));
-
     useEffect(() => {
-        getTasks("", "admin").then(setTasks);
         getUsers().then(setUsers);
+        getProjects().then(setProjects);
     }, []);
 
     const handleCreateProject = async () => {
+        if (!projectTitle || selectedUsers.length === 0) {
+            alert("Fill all fields");
+            return;
+        }
+
         const res = await createProject({
             title: projectTitle,
             users: selectedUsers,
         });
 
-        navigate(`/assign/${res._id}`); // 👈 redirect
+        navigate(`/assign/${res._id}`);
     };
 
     const handleUserSelect = (e) => {
@@ -33,18 +36,12 @@ export default function AdminDashboard() {
         );
     };
 
-    useEffect(() => {
-        getTasks("", "admin").then(data => {
-            console.log("ADMIN TASKS:", data); // 👈 ADD THIS
-            setTasks(data);
-        });
-    }, []);
-
-
     return (
         <div className="p-4">
-            <h1 className="text-xl font-bold">All Tasks</h1>
-            <div className="border p-4 mb-4 rounded">
+            <h1 className="text-xl font-bold mb-4">Admin Dashboard</h1>
+
+            {/* CREATE PROJECT */}
+            <div className="border p-4 mb-6 rounded">
                 <h2 className="font-bold mb-2">Create Project</h2>
 
                 <input
@@ -66,7 +63,7 @@ export default function AdminDashboard() {
                 </select>
 
                 <div className="mt-2">
-                    Selected Users:
+                    Selected:
                     {selectedUsers.map(id => {
                         const u = users.find(x => x._id === id);
                         return <span key={id} className="mx-2">{u?.name}</span>;
@@ -81,11 +78,16 @@ export default function AdminDashboard() {
                 </button>
             </div>
 
-            {tasks.map(task => (
-                <div key={task._id} className="border p-3 my-2">
-                    <h2>{task.title}</h2>
-                    <p>Status: {task.status}</p>
-                    <p>Assigned to: {task.assignedTo?.name}</p>
+            {/* PROJECT LIST */}
+            <h2 className="font-bold mb-2">All Projects</h2>
+
+            {projects.map(p => (
+                <div
+                    key={p._id}
+                    onClick={() => navigate(`/project/${p._id}`)}
+                    className="bg-white shadow p-3 my-2 cursor-pointer"
+                >
+                    {p.title}
                 </div>
             ))}
         </div>

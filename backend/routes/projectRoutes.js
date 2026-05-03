@@ -7,4 +7,8 @@ router.post("/create", createProject);
 
 router.get("/:id", getProjectById);
 
+router.get("/", getAllProjects);
+
+router.get("/user/:userId", getUserProjects);
+
 module.exports = router;
