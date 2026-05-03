@@ -58,7 +58,7 @@ exports.getUserProjects = async (req, res) => {
         const { userId } = req.params;
 
         const projects = await Project.find({
-            members: userId
+            users: userId
         });
 
         res.json(projects);

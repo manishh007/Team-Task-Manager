@@ -5,6 +5,7 @@ const {
     createProject,
     getProjectById,
     getAllProjects,
+    getUserProjects
 } = require("../controllers/projectController");
 
 
