@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://team-task-manager-production-6e3d.up.railway.app/";
 
 export const loginUser = (data) =>
     fetch(`${BASE_URL}/auth/login`, {
@@ -8,7 +8,7 @@ export const loginUser = (data) =>
     }).then(res => res.json());
 
 export const getTasks = (userId, role) => {
-    let url = `http://localhost:5000/api/tasks?role=${role}`;
+    let url = `https://team-task-manager-production-6e3d.up.railway.app/tasks?role=${role}`;
 
     if (role !== "admin") {
         url += `&userId=${userId}`;
@@ -18,14 +18,14 @@ export const getTasks = (userId, role) => {
 };
 
 export const updateTaskStatus = (taskId, userId, status) =>
-    fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+    fetch(`https://team-task-manager-production-6e3d.up.railway.app/tasks/${taskId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, status }),
     }).then(res => res.json());
 
 export const createTask = (data) =>
-    fetch("http://localhost:5000/api/tasks/create", {
+    fetch("https://team-task-manager-production-6e3d.up.railway.app/tasks/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
