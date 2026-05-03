@@ -43,7 +43,7 @@ export default function ProjectDetails() {
 
                     {/* Only user can update their own task */}
                     {user.role === "user" &&
-                        user._id === task.assignedTo?._id &&
+                        user._id.toString() === task.assignedTo?._id.toString() &&
                         task.status !== "completed" && (
                             <button
                                 onClick={() => handleUpdate(task._id)}

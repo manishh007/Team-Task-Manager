@@ -30,19 +30,24 @@ exports.createTask = async (req, res) => {
 //get tasks
 exports.getTasks = async (req, res) => {
     try {
-        const { userId, role } = req.query;
+        const { userId, role, projectId } = req.query;
 
-        let tasks;
+        let query = {};
+
+        // 🔥 filter by project
+        if (projectId) {
+            query.projectId = projectId;
+        }
 
         if (role === "admin") {
-            tasks = await Task.find()
-                .populate("assignedTo", "name")
-                .populate("projectId", "title");
+            // admin sees all tasks of that project
         } else {
-            tasks = await Task.find({
-                assignedTo: new mongoose.Types.ObjectId(userId)
-            }).populate("projectId", "title");
+            query.assignedTo = userId;
         }
+
+        const tasks = await Task.find(query)
+            .populate("assignedTo", "name")
+            .populate("projectId", "title");
 
         res.json(tasks);
     } catch (err) {
