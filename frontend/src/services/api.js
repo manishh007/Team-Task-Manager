@@ -20,6 +20,9 @@ export const getTasks = (userId, role) => {
 export const getUsers = () =>
     fetch(`${BASE_URL}/users`).then(res => res.json());
 
+export const getProject = (id) =>
+    fetch(`${BASE_URL}/projects/${id}`).then(res => res.json());
+
 export const createProject = (data) =>
     fetch(`${BASE_URL}/projects/create`, {
         method: "POST",
