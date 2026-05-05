@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "https://team-task-manager-production-6e3d.up.railway.app/api";
+const BASE_URL = "https://team-task-manager-vjj7.onrender.com/api";
 
 export default function Auth() {
     const navigate = useNavigate();

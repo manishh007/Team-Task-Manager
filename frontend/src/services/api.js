@@ -1,4 +1,4 @@
-const BASE_URL = "https://team-task-manager-production-6e3d.up.railway.app/api";
+const BASE_URL = "https://team-task-manager-vjj7.onrender.com/api";
 
 const handleResponse = async (res) => {
     if (!res.ok) {
