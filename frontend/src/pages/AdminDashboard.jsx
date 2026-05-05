@@ -37,59 +37,92 @@ export default function AdminDashboard() {
     };
 
     return (
-        <div className="p-4">
-            <h1 className="text-xl font-bold mb-4">Admin Dashboard</h1>
+        <div className="min-h-screen bg-orange-50 flex justify-center">
 
-            {/* CREATE PROJECT */}
-            <div className="border p-4 mb-6 rounded">
-                <h2 className="font-bold mb-2">Create Project</h2>
+            <div className="w-full max-w-5xl p-6">
 
-                <input
-                    placeholder="Project Title"
-                    className="border p-2 m-1"
-                    onChange={(e) => setProjectTitle(e.target.value)}
-                />
+                {/* HEADER */}
+                <h1 className="text-2xl font-bold text-gray-900 text-center mb-6">
+                    Admin Dashboard
+                </h1>
 
-                <select
-                    className="border p-2 m-1"
-                    onChange={handleUserSelect}
-                >
-                    <option>Select User</option>
-                    {users.map(u => (
-                        <option key={u._id} value={u._id}>
-                            {u.name}
-                        </option>
+                {/* CREATE PROJECT CARD */}
+                <div className="bg-white border border-orange-200 p-5 rounded-lg shadow-sm mb-8">
+
+                    <h2 className="text-lg font-semibold text-gray-800 mb-3">
+                        Create Project
+                    </h2>
+
+                    <input
+                        placeholder="Project Title"
+                        className="border border-orange-300 p-2 mb-2 w-full focus:outline-none focus:border-orange-500"
+                        onChange={(e) => setProjectTitle(e.target.value)}
+                    />
+
+                    <select
+                        className="border border-orange-300 p-2 mb-2 w-full cursor-pointer focus:outline-none focus:border-orange-500"
+                        onChange={handleUserSelect}
+                    >
+                        <option>Select User</option>
+                        {users.map(u => (
+                            <option key={u._id} value={u._id}>
+                                {u.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    <div className="text-sm text-gray-600 mb-3">
+                        Selected:
+                        {selectedUsers.length === 0 && " None"}
+                        {selectedUsers.map(id => {
+                            const u = users.find(x => x._id === id);
+                            return (
+                                <span key={id} className="ml-2 text-gray-800 font-medium">
+                                    {u?.name}
+                                </span>
+                            );
+                        })}
+                    </div>
+
+                    <button
+                        onClick={handleCreateProject}
+                        className="bg-orange-500 text-white px-4 py-2 hover:bg-orange-600 cursor-pointer"
+                    >
+                        Create Project
+                    </button>
+                </div>
+
+                {/* PROJECT LIST */}
+                <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                    All Projects
+                </h2>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+                    {projects.map(p => (
+                        <div
+                            key={p._id}
+                            onClick={() => navigate(`/project/${p._id}`)}
+                            className="bg-white border border-orange-200 p-4 rounded-lg shadow-sm hover:shadow-md cursor-pointer transition"
+                        >
+                            <h3 className="text-gray-800 font-semibold">
+                                {p.title}
+                            </h3>
+
+                            <p className="text-sm text-gray-500 mt-2">
+                                Click to view details
+                            </p>
+                        </div>
                     ))}
-                </select>
 
-                <div className="mt-2">
-                    Selected:
-                    {selectedUsers.map(id => {
-                        const u = users.find(x => x._id === id);
-                        return <span key={id} className="mx-2">{u?.name}</span>;
-                    })}
                 </div>
 
-                <button
-                    onClick={handleCreateProject}
-                    className="bg-green-500 text-white px-3 py-1 mt-2"
-                >
-                    Create Project
-                </button>
+                {projects.length === 0 && (
+                    <p className="text-center text-gray-500 mt-6">
+                        No projects created yet
+                    </p>
+                )}
             </div>
-
-            {/* PROJECT LIST */}
-            <h2 className="font-bold mb-2">All Projects</h2>
-
-            {projects.map(p => (
-                <div
-                    key={p._id}
-                    onClick={() => navigate(`/project/${p._id}`)}
-                    className="bg-white shadow p-3 my-2 cursor-pointer"
-                >
-                    {p.title}
-                </div>
-            ))}
         </div>
     );
 }

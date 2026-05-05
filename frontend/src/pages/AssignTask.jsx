@@ -16,6 +16,11 @@ export default function AssignTask() {
     }, []);
 
     const handleAssign = async () => {
+        if (!title || !userId) {
+            alert("Please fill all fields");
+            return;
+        }
+
         const admin = JSON.parse(localStorage.getItem("user"));
 
         await createTask({
@@ -25,39 +30,50 @@ export default function AssignTask() {
             adminId: admin._id,
         });
 
+        setTitle("");
+        setUserId("");
         alert("Task assigned");
     };
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Assign Task</h1>
+        <div className="min-h-screen bg-orange-50 flex items-center justify-center">
 
-            {/* Task input */}
-            <input
-                className="border p-2 m-2"
-                placeholder="Task title"
-                onChange={(e) => setTitle(e.target.value)}
-            />
+            <div className="w-full max-w-md bg-white border border-orange-200 shadow-sm p-6">
 
-            {/* User dropdown */}
-            <select
-                className="border p-2 m-2"
-                onChange={(e) => setUserId(e.target.value)}
-            >
-                <option>Select User</option>
-                {projectUsers.map(u => (
-                    <option key={u._id} value={u._id}>
-                        {u.name}
-                    </option>
-                ))}
-            </select>
+                {/* TITLE */}
+                <h1 className="text-xl font-semibold text-gray-900 text-center mb-4">
+                    Assign Task
+                </h1>
 
-            <button
-                onClick={handleAssign}
-                className="bg-blue-500 text-white px-4 py-2"
-            >
-                Assign
-            </button>
+                {/* SELECT */}
+                <select
+                    value={userId}
+                    className="w-full border border-orange-300 p-2 mb-4 cursor-pointer focus:outline-none focus:border-orange-500"
+                    onChange={(e) => setUserId(e.target.value)}
+                >
+                    <option value="">Select User</option>
+                    {projectUsers.map(u => (
+                        <option key={u._id} value={u._id}>
+                            {u.name}
+                        </option>
+                    ))}
+                </select>
+                {/* INPUT */}
+                <input
+                    value={title}
+                    className="w-full border border-orange-300 p-2 mb-3 focus:outline-none focus:border-orange-500"
+                    placeholder="Task title"
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+
+                {/* BUTTON */}
+                <button
+                    onClick={handleAssign}
+                    className="w-full bg-orange-500 text-white py-2 hover:bg-orange-600 cursor-pointer"
+                >
+                    Assign Task
+                </button>
+            </div>
         </div>
     );
 }
