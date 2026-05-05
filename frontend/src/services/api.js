@@ -18,8 +18,9 @@ export const loginUser = (data) =>
 export const getUsers = () =>
     fetch(`${BASE_URL}/users`).then(handleResponse);
 
-export const getProjects = () =>
-    fetch(`${BASE_URL}/projects`).then(handleResponse);
+export const getProjects = (adminId) =>
+    fetch(`${BASE_URL}/projects?adminId=${adminId}`)
+        .then(handleResponse);
 
 export const getUserProjects = (userId) =>
     fetch(`${BASE_URL}/projects/user/${userId}`).then(handleResponse);

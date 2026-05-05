@@ -8,11 +8,13 @@ export default function AdminDashboard() {
     const [projectTitle, setProjectTitle] = useState("");
     const [projects, setProjects] = useState([]);
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const navigate = useNavigate();
 
     useEffect(() => {
         getUsers().then(setUsers);
-        getProjects().then(setProjects);
+        getProjects(user._id).then(setProjects); // ✅ pass adminId
     }, []);
 
     const handleCreateProject = async () => {
@@ -24,6 +26,7 @@ export default function AdminDashboard() {
         const res = await createProject({
             title: projectTitle,
             users: selectedUsers,
+            adminId: user._id
         });
 
         navigate(`/assign/${res._id}`);

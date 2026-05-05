@@ -4,11 +4,12 @@ const User = require("../models/User");
 // Create Project (Admin only)
 exports.createProject = async (req, res) => {
     try {
-        const { title, users } = req.body;
+        const { title, users, adminId } = req.body;
 
         const project = await Project.create({
             title,
             users,
+            adminId   // ✅ IMPORTANT
         });
 
         res.json(project);
@@ -46,7 +47,10 @@ exports.getProjectById = async (req, res) => {
 
 exports.getAllProjects = async (req, res) => {
     try {
-        const projects = await Project.find();
+        const { adminId } = req.query;
+
+        const projects = await Project.find({ adminId });
+
         res.json(projects);
     } catch (err) {
         res.status(500).json({ error: err.message });
